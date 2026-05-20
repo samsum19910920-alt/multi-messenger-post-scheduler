@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}داشبورد{% endblock %}
+{% block header_title %}داشبورد مدیریت{% endblock %}
+
+{% block content %}
+<div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+    <div class="card">
+        <h3>تعداد کاربران</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">{{ stats.total_users }}</p>
+    </div>
+    
+    <div class="card">
+        <h3>تعداد کانال‌ها</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: var(--success-color);">{{ stats.total_channels }}</p>
+    </div>
+    
+    <div class="card">
+        <h3>تعداد پست‌ها</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">{{ stats.total_posts }}</p>
+    </div>
+    
+    <div class="card">
+        <h3>پست‌های ارسال شده</h3>
+        <p style="font-size: 2rem; font-weight: bold; color: var(--success-color);">{{ stats.sent_posts }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>مدیریت کاربران</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>شماره تلفن</th>
+                <th>وضعیت</th>
+                <th>اشتراک تا</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="users-table">
+            <tr>
+                <td colspan="4" style="text-align: center;">در حال بارگذاری...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function loadUsers() {
+        try {
+            const response = await fetch('/api/admin/users', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                }
+            });
+            
+            const data = await response.json();
+            const tbody = document.getElementById('users-table');
+            
+            if (data.users && data.users.length > 0) {
+                tbody.innerHTML = data.users.map(user => `
+                    <tr>
+                        <td>${user.phone_number}</td>
+                        <td>${user.is_active ? '✅ فعال' : '❌ غیرفعال'}</td>
+                        <td>${user.subscription_end || 'بدون اشتراک'}</td>
+                        <td>
+                            <button class="button button-danger" onclick="deleteUser(${user.id})">حذف</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">کاربری یافت نشد</td></tr>';
+            }
+        } catch (error) {
+            console.error('Error loading users:', error);
+        }
+    }
+    
+    function deleteUser(userId) {
+        if (confirm('آیا مطمئن هستید؟')) {
+            fetch(`/api/admin/users/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                }
+            }).then(() => loadUsers());
+        }
+    }
+    
+    loadUsers();
+</script>
+{% endblock %}
