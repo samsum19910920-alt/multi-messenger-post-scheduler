@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layoutDirection="rtl">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="صفحه اصلی"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="right"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/tv_channel_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="کانال‌ها: 0"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tv_post_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="پست‌ها: 0"
+        android:textSize="18sp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btn_add_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="اضافه کردن کانال" />
+
+    <Button
+        android:id="@+id/btn_create_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ایجاد پست"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>
