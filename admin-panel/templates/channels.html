@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}مدیریت کاناله‌ها{% endblock %}
+{% block page_title %}مدیریت کاناله‌ها{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>کاناله‌ها</h2>
+    
+    <div style="margin-bottom: 1rem;">
+        <button class="button button-primary" onclick="exportTableToCSV('channels.csv', 'channels-table')">دانلود CSV</button>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>نوع پیام‌رسان</th>
+                <th>نام کانال</th>
+                <th>وضعیت</th>
+                <th>تاریخ ایجاد</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="channels-table">
+            <tr>
+                <td colspan="6" style="text-align: center;">درحال بارگذاری...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadChannels();
+        setInterval(loadChannels, 30000);
+    });
+</script>
+{% endblock %}

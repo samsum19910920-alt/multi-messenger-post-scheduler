@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}مدیریت کاربران{% endblock %}
+{% block page_title %}مدیریت کاربران{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>کاربران</h2>
+    
+    <div style="margin-bottom: 1rem;">
+        <input type="text" id="search-user" placeholder="جستجو بر اساس شماره تلفن..." style="width: 300px;">
+        <button class="button button-primary" onclick="exportTableToCSV('users.csv', 'users-table')">دانلود CSV</button>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>شماره تلفن</th>
+                <th>وضعیت</th>
+                <th>اشتراک تا</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="users-table">
+            <tr>
+                <td colspan="4" style="text-align: center;">درحال بارگذاری...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Load users on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadUsers();
+        
+        // Refresh every 30 seconds
+        setInterval(loadUsers, 30000);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}لاگ فعالیت‌ها{% endblock %}
+{% block page_title %}لاگ فعالیت‌ها{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>لاگ‌های نظارتی</h2>
+    
+    <div style="margin-bottom: 1rem;">
+        <button class="button button-primary" onclick="exportTableToCSV('audit_logs.csv', 'logs-table')">دانلود CSV</button>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>زمان</th>
+                <th>نوع عملیات</th>
+                <th>توضیح</th>
+                <th>IP Address</th>
+                <th>وضعیت</th>
+            </tr>
+        </thead>
+        <tbody id="logs-table">
+            <tr>
+                <td colspan="5" style="text-align: center;">درحال بارگذاری...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAuditLogs();
+        // Refresh every minute
+        setInterval(loadAuditLogs, 60000);
+    });
+</script>
+{% endblock %}

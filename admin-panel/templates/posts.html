@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}مدیریت پست‌ها{% endblock %}
+{% block page_title %}مدیریت پست‌ها{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>پست‌های زمان‌بندی شده</h2>
+    
+    <div style="margin-bottom: 1rem;">
+        <button class="button button-primary" onclick="exportTableToCSV('posts.csv', 'posts-table')">دانلود CSV</button>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>متن</th>
+                <th>نوع</th>
+                <th>زمان زمان‌بندی</th>
+                <th>وضعیت</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="posts-table">
+            <tr>
+                <td colspan="6" style="text-align: center;">درحال بارگذاری...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPosts();
+        setInterval(loadPosts, 30000);
+    });
+</script>
+{% endblock %}

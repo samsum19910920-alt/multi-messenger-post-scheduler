@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}مدیریت سیستم{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <header>
+        <div style="display: flex; gap: 1rem;">
+            <button onclick="toggleDarkMode()" class="button button-primary" style="padding: 0.5rem 1rem;">🌙 تم</button>
+            <a href="/logout" class="button button-danger" style="padding: 0.5rem 1rem; text-decoration: none;">خروج</a>
+        </div>
+        <h1>{% block header_title %}مدیریت سیستم{% endblock %}</h1>
+    </header>
+
+    <div class="sidebar">
+        <ul>
+            <li><a href="/admin/dashboard" class="sidebar-link">📊 داشبورد</a></li>
+            <li><a href="/admin/users" class="sidebar-link">👥 کاربران</a></li>
+            <li><a href="/admin/channels" class="sidebar-link">📢 کاناله‌ها</a></li>
+            <li><a href="/admin/posts" class="sidebar-link">📝 پست‌ها</a></li>
+            <li><a href="/admin/logs" class="sidebar-link">📋 لاگ‌ها</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>{% block page_title %}صفحه مدیریت{% endblock %}</h1>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <script>
+        // Set admin key if not exists
+        if (!localStorage.getItem('admin_key')) {
+            localStorage.setItem('admin_key', prompt('Admin Key را وارد کنید:'));
+        }
+        
+        // Add active class to sidebar link
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname;
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
